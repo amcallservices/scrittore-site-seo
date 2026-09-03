@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { appUrl, communityUrl, copy, isLocale, locales, packages, siteUrl, type Locale, whatsappUrl } from "../../lib/site";
+import { appUrl, communityUrl, copy, isLocale, locales, siteUrl, type Locale, whatsappUrl } from "../../lib/site";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -48,29 +48,22 @@ export default async function LocaleHome({ params }: Props) {
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     <header className="site-header">
       <Link href={`/${locale}`} className="brand">Scrittore <span>Site</span></Link>
-      <nav aria-label="Main navigation"><a href="#features">{t.nav[0]}</a><a href="#how">{t.nav[1]}</a><a href="#engines">{t.nav[2]}</a><a href="#pricing">{t.nav[3]}</a><a href="#faq">{t.nav[4]}</a></nav>
+      <nav aria-label="Main navigation"><a href="#features">{t.nav[0]}</a><Link href={`/${locale}/come-funziona`}>{t.nav[1]}</Link><a href="#engines">{t.nav[2]}</a><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><a href="#faq">{t.nav[4]}</a></nav>
       <details className="language-picker"><summary>{t.language}</summary><div>{locales.map((code) => <Link href={`/${code}`} key={code}>{copy[code].language}</Link>)}</div></details>
     </header>
 
-    <section className="hero">
-      <div><p className="eyebrow">WRITING WORKSPACE</p><h1>{t.hero}</h1><p className="lead">{t.lead}</p><div className="actions"><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a><a className="button ghost" href="#how">{t.secondary}</a></div></div>
-      <div className="hero-card" aria-label="Scrittore Site workflow preview"><span>01</span><b>Progetto editoriale</b><p>Idea · Indice · Stesura · Controllo</p><div className="hero-progress"><i /><i /><i /></div><small>Word · PDF · CSV</small></div>
+    <section className="hero hero-compact">
+      <div><p className="eyebrow">WRITING WORKSPACE</p><h1>{t.hero}</h1><p className="lead">{t.lead}</p><div className="actions"><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a><Link className="button ghost" href={`/${locale}/come-funziona`}>{t.secondary}</Link></div></div>
     </section>
 
-    <section className="trust"><span>✦</span><b>Due cervelli AI</b><span>✦</span><b>Progetto sotto controllo</b><span>✦</span><b>Esporta quando vuoi</b></section>
+    <section className="demo demo-first"><p className="eyebrow">LIVE DEMO</p><h2>{t.demoTitle}</h2><p>{t.demoText}</p><div className="frame-wrap"><iframe src={`${appUrl}?embed=true`} title="Scrittore Site demo" loading="eager" /></div><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.fullscreen} ↗</a></section>
 
-    <section id="how" className="section"><p className="eyebrow">PROCESSO</p><h2>{t.flowTitle}</h2><div className="flow">{t.flow.map((step, index) => <div key={step}><em>{String(index + 1).padStart(2, "0")}</em><strong>{step}</strong></div>)}</div></section>
+    <section id="features" className="section section-compact"><p className="eyebrow">SCRITTORE SITE</p><h2>{t.featureTitle}</h2><p className="essential-copy">{t.features.join(" · ")}</p></section>
 
-    <section id="engines" className="section engines"><p className="eyebrow">AI</p><h2>{t.engineTitle}</h2><div className="engine-grid"><article><span>GPT-5.4</span><h3>GPT-5.4</h3><p>{t.gpt}</p></article><article><span>DEEPSEEK V4 PRO</span><h3>DeepSeek V4 Pro</h3><p>{t.deepseek}</p></article></div><p className="note">{t.creditNote}</p></section>
+    <section id="engines" className="section engines section-compact"><p className="eyebrow">AI</p><h2>{t.engineTitle}</h2><div className="engine-grid"><article><h3>GPT-5.4</h3><p>{t.gpt}</p></article><article><h3>DeepSeek V4 Pro</h3><p>{t.deepseek}</p></article></div><p className="note">{t.creditNote}</p></section>
 
-    <section id="features" className="section"><p className="eyebrow">WORKSPACE</p><h2>{t.featureTitle}</h2><div className="feature-grid">{t.features.map((feature, index) => <article key={feature}><em>{String(index + 1).padStart(2, "0")}</em><p>{feature}</p></article>)}</div></section>
-
-    <section className="demo section"><p className="eyebrow">LIVE DEMO</p><h2>{t.demoTitle}</h2><p>{t.demoText}</p><div className="frame-wrap"><iframe src={`${appUrl}?embed=true`} title="Scrittore Site demo" loading="lazy" /></div><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.fullscreen} ↗</a></section>
-
-    <section id="pricing" className="section"><p className="eyebrow">CREDITI</p><h2>{t.pricingTitle}</h2><p>{t.pricingLead}</p><div className="packages">{packages.map(([name, credits, price, description]) => <article key={name}><h3>{name}</h3><b>{credits} <small>crediti</small></b><strong>{price}</strong><p>{description}</p><a href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a></article>)}</div></section>
-
-    <section id="faq" className="section faq"><p className="eyebrow">FAQ</p><h2>{t.faqTitle}</h2><Faq locale={locale} /></section>
-    <section className="closing"><h2>{t.finalTitle}</h2><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a></section>
+    <section id="faq" className="section faq section-compact"><p className="eyebrow">FAQ</p><h2>{t.faqTitle}</h2><Faq locale={locale} /></section>
+    <section className="closing closing-compact"><h2>{t.finalTitle}</h2><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a></section>
     <footer><span>{t.copyright} {new Date().getFullYear()}</span><div><Link href={`/${locale}/funzioni`}>{t.nav[0]}</Link><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><Link href={`/${locale}/faq`}>FAQ</Link><Link href={`/${locale}/privacy`}>Privacy</Link><a href={communityUrl} target="_blank" rel="noopener noreferrer">{t.community}</a><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">{t.support}</a></div></footer>
   </main>;
 }
