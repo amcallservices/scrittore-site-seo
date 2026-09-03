@@ -48,7 +48,7 @@ export default async function LocaleHome({ params }: Props) {
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     <header className="site-header">
       <Link href={`/${locale}`} className="brand">Scrittore <span>Site</span></Link>
-      <nav aria-label="Main navigation"><a href="#features">{t.nav[0]}</a><Link href={`/${locale}/come-funziona`}>{t.nav[1]}</Link><a href="#engines">{t.nav[2]}</a><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><a href="#faq">{t.nav[4]}</a></nav>
+      <nav aria-label="Main navigation"><a href="#features">{t.nav[0]}</a><Link href={`/${locale}/come-funziona`}>{t.nav[1]}</Link><a href="#engines">{t.nav[2]}</a><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link>{locale === "it" && <Link href="/it/risorse">Risorse</Link>}<a href="#faq">{t.nav[4]}</a></nav>
       <details className="language-picker"><summary>{t.language}</summary><div>{locales.map((code) => <Link href={`/${code}`} key={code}>{copy[code].language}</Link>)}</div></details>
     </header>
 
@@ -64,8 +64,9 @@ export default async function LocaleHome({ params }: Props) {
 
     <section id="engines" className="section engines section-compact"><p className="eyebrow">AI</p><h2>{t.engineTitle}</h2><div className="engine-grid"><article><h3>GPT-5.4</h3><p>{t.gpt}</p></article><article><h3>DeepSeek V4 Pro</h3><p>{t.deepseek}</p></article></div><p className="note">{t.creditNote}</p></section>
 
+    {locale === "it" && <section className="section resources-promo section-compact"><p className="eyebrow">RISORSE</p><h2>Guide pratiche per progettare e pubblicare meglio</h2><p className="essential-copy">Otto guide gratuite per usare Scrittore Site: dalla sidebar all'indice, dalla scrittura ai controlli, fino al salvataggio del progetto.</p><Link className="button ghost" href="/it/risorse">Vai alle risorse →</Link></section>}
     <section id="faq" className="section faq section-compact"><p className="eyebrow">FAQ</p><h2>{t.faqTitle}</h2><Faq locale={locale} /></section>
     <section className="closing closing-compact"><h2>{t.finalTitle}</h2><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a></section>
-    <footer><span>{t.copyright} {new Date().getFullYear()}</span><div><Link href={`/${locale}/funzioni`}>{t.nav[0]}</Link><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><Link href={`/${locale}/faq`}>FAQ</Link><Link href={`/${locale}/privacy`}>Privacy</Link><a href={communityUrl} target="_blank" rel="noopener noreferrer">{t.community}</a><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">{t.support}</a></div></footer>
+    <footer><span>{t.copyright} {new Date().getFullYear()}</span><div>{locale === "it" && <Link href="/it/risorse">Risorse</Link>}<Link href={`/${locale}/funzioni`}>{t.nav[0]}</Link><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><Link href={`/${locale}/faq`}>FAQ</Link><Link href={`/${locale}/privacy`}>Privacy</Link><a href={communityUrl} target="_blank" rel="noopener noreferrer">{t.community}</a><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">{t.support}</a></div></footer>
   </main>;
 }
