@@ -52,11 +52,13 @@ export default async function LocaleHome({ params }: Props) {
       <details className="language-picker"><summary>{t.language}</summary><div>{locales.map((code) => <Link href={`/${code}`} key={code}>{copy[code].language}</Link>)}</div></details>
     </header>
 
-    <section className="hero hero-compact">
+    <section className="demo demo-first" aria-label="Scrittore Site demo"><div className="frame-wrap"><iframe src={`${appUrl}?embed=true`} title="Scrittore Site demo" loading="eager" /></div></section>
+
+    <section className="hero hero-after-demo">
       <div><p className="eyebrow">WRITING WORKSPACE</p><h1>{t.hero}</h1><p className="lead">{t.lead}</p><div className="actions"><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a><Link className="button ghost" href={`/${locale}/come-funziona`}>{t.secondary}</Link></div></div>
     </section>
 
-    <section className="demo demo-first"><p className="eyebrow">LIVE DEMO</p><h2>{t.demoTitle}</h2><p>{t.demoText}</p><div className="frame-wrap"><iframe src={`${appUrl}?embed=true`} title="Scrittore Site demo" loading="eager" /></div><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.fullscreen} ↗</a></section>
+    <section className="demo-link"><p>{t.demoText}</p><a className="button ghost" href={appUrl} target="_blank" rel="noopener noreferrer">{t.fullscreen} ↗</a></section>
 
     <section id="features" className="section section-compact"><p className="eyebrow">SCRITTORE SITE</p><h2>{t.featureTitle}</h2><p className="essential-copy">{t.features.join(" · ")}</p></section>
 
