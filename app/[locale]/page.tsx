@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-function Faq({ locale }: { locale: Locale }) {
+function faqEntries(locale: Locale): [string, string][] {
   const entries: Record<Locale, [string, string][]> = {
     it: [["Cos'è Scrittore Site?", "È un ambiente guidato per progettare, scrivere, controllare e esportare libri."], ["Posso modificare i testi?", "Sì. L'editor permette di intervenire sulle sezioni e di salvare il progetto."], ["Il controllo copyright è una certificazione legale?", "No. È un controllo di supporto editoriale: verifica sempre il risultato prima della pubblicazione."]],
     en: [["What is Scrittore Site?", "It is a guided environment for planning, writing, reviewing and exporting books."], ["Can I edit the text?", "Yes. The editor lets you work on sections and save the project."], ["Is the copyright check a legal certification?", "No. It is editorial support: always review the result before publishing."]],
@@ -34,7 +34,11 @@ function Faq({ locale }: { locale: Locale }) {
     ar: [["ما هو Scrittore Site؟", "بيئة إرشادية لتخطيط الكتب وكتابتها ومراجعتها وتصديرها."], ["هل يمكنني تعديل النص؟", "نعم. يتيح المحرر تعديل الأقسام وحفظ المشروع."], ["هل فحص حقوق النشر شهادة قانونية؟", "لا. إنه دعم تحريري: راجع النتيجة دائماً قبل النشر."]],
     zh: [["Scrittore Site 是什么？", "它是用于规划、写作、检查和导出图书的引导式环境。"], ["我可以修改文本吗？", "可以。编辑器允许修改章节并保存项目。"], ["版权检查是法律认证吗？", "不是。它是编辑辅助：发布前请始终检查结果。"]],
   };
-  return <div className="faq-list">{entries[locale].map(([q, a]) => <details key={q}><summary>{q}</summary><p>{a}</p></details>)}</div>;
+  return entries[locale];
+}
+
+function Faq({ locale }: { locale: Locale }) {
+  return <div className="faq-list">{faqEntries(locale).map(([q, a]) => <details key={q}><summary>{q}</summary><p>{a}</p></details>)}</div>;
 }
 
 export default async function LocaleHome({ params }: Props) {
@@ -42,7 +46,14 @@ export default async function LocaleHome({ params }: Props) {
   if (!isLocale(locale)) notFound();
   const t = copy[locale];
   const dir = t.direction || "ltr";
-  const schema = { "@context": "https://schema.org", "@type": "SoftwareApplication", name: "Scrittore Site", applicationCategory: "WritingApplication", operatingSystem: "Web", description: t.seoDescription, url: appUrl };
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "SoftwareApplication", name: "Scrittore Site", applicationCategory: "WritingApplication", operatingSystem: "Web", description: t.seoDescription, url: appUrl, applicationSubCategory: "Book writing and editorial workspace", featureList: t.features, offers: { "@type": "Offer", price: "0", priceCurrency: "EUR", description: t.primary } },
+      { "@type": "Organization", name: "Scrittore Site", url: siteUrl, contactPoint: { "@type": "ContactPoint", contactType: "customer support", url: whatsappUrl } },
+      { "@type": "FAQPage", mainEntity: faqEntries(locale).map(([name, text]) => ({ "@type": "Question", name, acceptedAnswer: { "@type": "Answer", text } })) },
+    ],
+  };
 
   return <main dir={dir} lang={locale}>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -52,15 +63,15 @@ export default async function LocaleHome({ params }: Props) {
       <details className="language-picker"><summary>{t.language}</summary><div>{locales.map((code) => <Link href={`/${code}`} key={code}>{copy[code].language}</Link>)}</div></details>
     </header>
 
-    <section className="demo demo-first" aria-label="Scrittore Site demo"><div className="frame-wrap"><iframe src={`${appUrl}?embed=true`} title="Scrittore Site demo" loading="eager" /></div></section>
-
     <section className="hero hero-after-demo">
       <div><p className="eyebrow">WRITING WORKSPACE</p><h1>{t.hero}</h1><p className="lead">{t.lead}</p><div className="actions"><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a><Link className="button ghost" href={`/${locale}/come-funziona`}>{t.secondary}</Link></div></div>
     </section>
 
+    <section className="demo demo-first" aria-label="Scrittore Site demo"><div className="demo-intro"><p className="eyebrow">LIVE DEMO</p><h2>{t.demoTitle}</h2><p>{t.demoText}</p></div><div className="frame-wrap"><iframe src={`${appUrl}?embed=true`} title="Scrittore Site demo" loading="eager" /></div></section>
+
     <section className="demo-link"><p>{t.demoText}</p><a className="button ghost" href={appUrl} target="_blank" rel="noopener noreferrer">{t.fullscreen} ↗</a></section>
 
-    <section id="features" className="section section-compact"><p className="eyebrow">SCRITTORE SITE</p><h2>{t.featureTitle}</h2><p className="essential-copy">{t.features.join(" · ")}</p></section>
+    <section id="features" className="section section-compact"><p className="eyebrow">SCRITTORE SITE</p><h2>{t.featureTitle}</h2><ul className="feature-list">{t.features.map((feature) => <li key={feature}>{feature}</li>)}</ul></section>
 
     <section id="engines" className="section engines section-compact"><p className="eyebrow">AI</p><h2>{t.engineTitle}</h2><div className="engine-grid"><article><h3>GPT-5.4</h3><p>{t.gpt}</p></article><article><h3>DeepSeek V4 Pro</h3><p>{t.deepseek}</p></article></div><p className="note">{t.creditNote}</p></section>
 

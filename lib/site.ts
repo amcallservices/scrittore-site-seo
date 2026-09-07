@@ -2,6 +2,7 @@ export const appUrl = "https://scrittoresite.streamlit.app/";
 export const communityUrl = "https://community-fdjf.vercel.app/";
 export const whatsappUrl = "https://wa.me/393282693777?text=Scrivo%20da%20Scrittore%20Site";
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://scrittore.site";
+export const siteName = "Scrittore Site";
 
 export const locales = ["it", "en", "es", "fr", "de", "ro", "ru", "ar", "zh"] as const;
 export type Locale = (typeof locales)[number];
