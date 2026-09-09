@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { appUrl, copy, isLocale, locales, packages, siteUrl, type Locale } from "../../../lib/site";
 import { pageContent } from "../../../lib/page-content";
 import { functionPageContent } from "../../../lib/function-content";
+import { resourceUi } from "../../../lib/localized-resources";
 
 const pages = ["funzioni", "prezzi", "come-funziona", "faq", "privacy", "termini"] as const;
 type PageName = (typeof pages)[number];
@@ -26,7 +27,7 @@ function descriptionFor(locale: Locale, page: PageName) {
   const descriptions: Record<PageName, string> = {
     funzioni: functionPageContent[locale].intro,
     prezzi: t.pricingLead,
-    "come-funziona": `${t.flowTitle}: ${t.flow.join(" · ")}.`,
+    "come-funziona": functionPageContent[locale].intro,
     faq: t.creditNote,
     privacy: pageContent[locale].privacy[0],
     termini: pageContent[locale].terms[0],
@@ -52,7 +53,7 @@ export default async function InformationPage({ params }: Props) {
   const body: Record<PageName, React.ReactNode> = {
     funzioni: <><p className="page-intro">{functionPageContent[locale].intro}</p><div className="function-groups">{functionPageContent[locale].groups.map((group) => <section key={group.title} className="function-group"><h2>{group.title}</h2><p>{group.description}</p><ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul></section>)}</div><p className="function-note">{functionPageContent[locale].closing}</p></>,
     prezzi: <div className="simple-packages">{packages.map(([name, credits, price], index) => <article key={name}><h2>{name}</h2><b>{credits} crediti · {price}</b><p>{content.packageDescriptions[index]}</p></article>)}</div>,
-    "come-funziona": <ol>{t.flow.map((step) => <li key={step}>{step}</li>)}</ol>,
+    "come-funziona": <><p className="page-intro">{functionPageContent[locale].intro}</p><div className="workflow-steps">{functionPageContent[locale].groups.map((group) => <section key={group.title} className="workflow-step"><h2>{group.title}</h2><p>{group.description}</p><ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul></section>)}</div><p className="function-note">{functionPageContent[locale].closing}</p><div className="workflow-actions"><Link className="button ghost" href={`/${locale}/funzioni`}>{t.nav[0]} →</Link><Link className="button ghost" href={`/${locale}/risorse`}>{resourceUi[locale].nav} →</Link><Link className="button primary" href={`/${locale}/prezzi`}>{t.nav[3]} →</Link></div></>,
     faq: <><h2>{t.faqTitle}</h2><p>{t.creditNote}</p><p>{content.faqText}</p></>,
     privacy: <><p>{content.privacy[0]}</p><p>{content.privacy[1]}</p></>,
     termini: <><p>{content.terms[0]}</p><p>{content.terms[1]}</p></>,
