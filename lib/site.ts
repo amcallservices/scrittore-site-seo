@@ -1,6 +1,7 @@
 export const appUrl = "https://scrittoresite.streamlit.app/";
 export const communityUrl = "https://community-fdjf.vercel.app/";
 export const whatsappUrl = "https://wa.me/393282693777?text=Scrivo%20da%20Scrittore%20Site";
+export const instagramUrl = "https://www.instagram.com/scrittore.site/";
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://scrittore.site";
 export const siteName = "Scrittore Site";
 
@@ -27,6 +28,18 @@ export const copy: Record<Locale, Copy> = {
   ar: { language:"العربية", direction:"rtl", locale:"ar", seoTitle:"اكتب كتابك بالذكاء الاصطناعي", seoDescription:"يساعدك Scrittore Site على تخطيط كتابك وكتابته ومراجعته وتصديره.", nav:["الميزات","كيف يعمل","محركا الذكاء","الأرصدة","الأسئلة"], hero:"اكتب كتابك بطريقتك.", lead:"خطط واكتب وراجع وصدّر مخطوطتك مع الاحتفاظ بالتحكم الكامل بالمشروع.", primary:"ابدأ مجاناً مع 50 رصيداً", secondary:"اكتشف كيف يعمل", demoTitle:"جرّب Scrittore Site", demoText:"استكشف التطبيق هنا أو افتحه بملء الشاشة.", fullscreen:"افتح Scrittore Site بملء الشاشة", flowTitle:"من الفكرة إلى الكتاب", flow:["فكرة","شريط جانبي إرشادي","المصادر والفهرس","الكتابة","التحقق","Word أو PDF أو CSV"], engineTitle:"محركان للذكاء الاصطناعي وخيار واعٍ", gpt:"كل الميزات وفحص حقوق النشر على الويب والصور.", deepseek:"بحث مصادر بسجل ظاهر وفهرس وكتابة واستهلاك أخف.", creditNote:"يظهر التقدير قبل البدء. يعتمد الاستهلاك على المحرك والطول والعملية.", featureTitle:"كل ما تحتاجه لمشروعك التحريري", features:["فهرس احترافي","كتابة فصل بفصل","فحص الاكتمال","الأصالة وحقوق النشر","الحفظ والاستعادة","محرر ومعاينة وقارئ صوتي","استيراد وتصدير Word وPDF وCSV","اختبارات ووصفات وTest Prep"], pricingTitle:"أرصدة واضحة واستخدام مرن", pricingLead:"اختر الباقة المناسبة لسرعة عملك.", faqTitle:"أسئلة شائعة", finalTitle:"فكرتك تستحق بنية، لا صفحة فارغة.", community:"مجتمعنا", support:"اتصل بالدعم", copyright:"© Scrittore Site" },
   zh: { language:"中文", locale:"zh-CN", seoTitle:"使用人工智能写作您的图书", seoDescription:"Scrittore Site 帮助您规划、写作、检查和导出图书。", nav:["功能","工作方式","两种 AI 引擎","积分","常见问题"], hero:"用自己的方法写出您的书。", lead:"规划、写作、检查并导出手稿，同时始终掌控项目。", primary:"免费开始，赠送 50 积分", secondary:"了解工作方式", demoTitle:"试用 Scrittore Site", demoText:"在此探索应用，或以全屏方式打开。", fullscreen:"全屏打开 Scrittore Site", flowTitle:"从想法到图书", flow:["想法","引导式侧栏","资料与目录","写作","检查","Word、PDF 或 CSV"], engineTitle:"两种 AI 引擎，明智选择", gpt:"完整功能、网页版权检查与图片生成。", deepseek:"带可见记录的来源研究、目录、写作和更轻的积分消耗。", creditNote:"开始前会显示预估。积分消耗取决于 AI 引擎、长度和操作。", featureTitle:"编辑项目所需的一切", features:["专业目录","逐章写作","完整性检查","原创性与版权","保存与恢复","编辑器、预览和语音阅读器","Word、PDF 和 CSV 导入导出","测验、食谱和 Test Prep"], pricingTitle:"清晰积分，灵活使用", pricingLead:"选择适合您工作节奏的套餐。", faqTitle:"常见问题", finalTitle:"您的想法值得一套结构，而不是一张空白页。", community:"我们的社区", support:"联系支持团队", copyright:"© Scrittore Site" }
 };
+
+// Le immagini non vengono generate dal software: possono essere caricate dall'utente
+// dopo essere state create esternamente. Manteniamo questa descrizione coerente in ogni lingua.
+copy.it.gpt = "Funzioni complete, controllo copyright web e caricamento di immagini esterne.";
+copy.en.gpt = "Complete features, web copyright checks and externally created image uploads.";
+copy.es.gpt = "Funciones completas, control de copyright web y carga de imágenes creadas externamente.";
+copy.fr.gpt = "Fonctions complètes, contrôle copyright web et ajout d'images créées à l'extérieur.";
+copy.de.gpt = "Alle Funktionen, Web-Copyrightprüfung und Upload extern erstellter Bilder.";
+copy.ro.gpt = "Funcții complete, copyright web și încărcarea imaginilor create extern.";
+copy.ru.gpt = "Все функции, web-copyright и загрузка внешних изображений.";
+copy.ar.gpt = "كل الميزات وفحص حقوق النشر على الويب ورفع الصور المنشأة خارجياً.";
+copy.zh.gpt = "完整功能、网页版权检查与上传外部创建的图片。";
 
 export const packages = [
   ["Prova", "15", "€1,00", "Per provare funzioni e piccoli interventi."],

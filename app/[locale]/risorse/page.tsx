@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const ui = resourceUi[locale];
-  const languages = Object.fromEntries(locales.map((code) => [copy[code].locale, `${siteUrl}/${code}/risorse`]));
+  const languages = { ...Object.fromEntries(locales.map((code) => [copy[code].locale, `${siteUrl}/${code}/risorse`])), "x-default": `${siteUrl}/it/risorse` };
   return { title: ui.indexTitle, description: ui.indexLead, keywords: [ui.nav, "Scrittore Site", "book writing guides"], alternates: { canonical: `${siteUrl}/${locale}/risorse`, languages }, openGraph: { type: "website", title: ui.indexTitle, description: ui.indexLead, url: `${siteUrl}/${locale}/risorse`, locale: copy[locale].locale } };
 }
 

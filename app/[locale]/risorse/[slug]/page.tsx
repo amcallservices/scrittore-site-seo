@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getResource, getResources, resourceUi } from "../../../../lib/localized-resources";
+import { relatedResourceSlugs } from "../../../../lib/resources";
 import { appUrl, copy, isLocale, locales, siteUrl } from "../../../../lib/site";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
@@ -15,12 +16,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!isLocale(locale)) return {};
   const guide = getResource(locale, slug);
   if (!guide) return {};
-  const languages = Object.fromEntries(locales.map((code) => [copy[code].locale, `${siteUrl}/${code}/risorse/${guide.slug}`]));
+  const isEditorialSource = locale === "it";
+  const languages = isEditorialSource ? { [copy.it.locale]: `${siteUrl}/it/risorse/${guide.slug}`, "x-default": `${siteUrl}/it/risorse/${guide.slug}` } : undefined;
   return {
     title: guide.title,
     description: guide.description,
     keywords: guide.keywords,
     alternates: { canonical: `${siteUrl}/${locale}/risorse/${guide.slug}`, languages },
+    robots: isEditorialSource ? { index: true, follow: true } : { index: false, follow: true },
     openGraph: { type: "article", title: guide.title, description: guide.description, url: `${siteUrl}/${locale}/risorse/${guide.slug}`, locale: copy[locale].locale },
   };
 }
@@ -36,9 +39,11 @@ export default async function ResourceArticle({ params }: Props) {
     "@graph": [
       { "@type": "Article", headline: guide.title, description: guide.description, inLanguage: copy[locale].locale, mainEntityOfPage: `${siteUrl}/${locale}/risorse/${guide.slug}`, author: { "@type": "Organization", name: "Scrittore Site" }, publisher: { "@type": "Organization", name: "Scrittore Site" } },
       { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: `${siteUrl}/${locale}` }, { "@type": "ListItem", position: 2, name: ui.nav, item: `${siteUrl}/${locale}/risorse` }, { "@type": "ListItem", position: 3, name: guide.title, item: `${siteUrl}/${locale}/risorse/${guide.slug}` }] },
+      { "@type": "FAQPage", mainEntity: guide.faq.map(([name, text]) => ({ "@type": "Question", name, acceptedAnswer: { "@type": "Answer", text } })) },
     ],
   };
-  const related = getResources(locale).filter((resource) => resource.slug !== guide.slug).slice(0, 3);
+  const relatedSlugs = relatedResourceSlugs[guide.slug] || [];
+  const related = relatedSlugs.map((relatedSlug) => getResource(locale, relatedSlug)).filter((resource): resource is NonNullable<typeof resource> => Boolean(resource));
   return <main dir={copy[locale].direction || "ltr"} lang={locale} className="article-page">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     <header className="site-header"><Link href={`/${locale}`} className="brand">Scrittore <span>Site</span></Link><nav aria-label={ui.nav}><Link href={`/${locale}`}>Home</Link><Link href={`/${locale}/risorse`}>{ui.nav}</Link><a href={appUrl} target="_blank" rel="noopener noreferrer">{ui.begin} ↗</a></nav></header>

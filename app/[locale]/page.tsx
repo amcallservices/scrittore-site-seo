@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { resourceUi } from "../../lib/localized-resources";
-import { appUrl, communityUrl, copy, isLocale, locales, siteUrl, type Locale, whatsappUrl } from "../../lib/site";
+import { appUrl, communityUrl, copy, instagramUrl, isLocale, locales, siteUrl, type Locale, whatsappUrl } from "../../lib/site";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const item = copy[locale];
-  const languages = Object.fromEntries(locales.map((code) => [copy[code].locale, `${siteUrl}/${code}`]));
+  const languages = { ...Object.fromEntries(locales.map((code) => [copy[code].locale, `${siteUrl}/${code}`])), "x-default": `${siteUrl}/it` };
   return {
     title: item.seoTitle,
     description: item.seoDescription,
@@ -51,8 +51,9 @@ export default async function LocaleHome({ params }: Props) {
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "SoftwareApplication", name: "Scrittore Site", applicationCategory: "WritingApplication", operatingSystem: "Web", description: t.seoDescription, url: appUrl, applicationSubCategory: "Book writing and editorial workspace", featureList: t.features, offers: { "@type": "Offer", price: "0", priceCurrency: "EUR", description: t.primary } },
-      { "@type": "Organization", name: "Scrittore Site", url: siteUrl, contactPoint: { "@type": "ContactPoint", contactType: "customer support", url: whatsappUrl } },
+      { "@type": "SoftwareApplication", name: "Scrittore Site", applicationCategory: "WritingApplication", operatingSystem: "Web", description: t.seoDescription, url: appUrl, applicationSubCategory: "Book writing and editorial workspace", featureList: t.features },
+      { "@type": "Organization", name: "Scrittore Site", url: siteUrl, sameAs: [instagramUrl], contactPoint: { "@type": "ContactPoint", contactType: "customer support", url: whatsappUrl } },
+      { "@type": "WebSite", name: "Scrittore Site", url: siteUrl, inLanguage: t.locale },
       { "@type": "FAQPage", mainEntity: faqEntries(locale).map(([name, text]) => ({ "@type": "Question", name, acceptedAnswer: { "@type": "Answer", text } })) },
     ],
   };

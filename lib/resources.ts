@@ -15,6 +15,22 @@ export type ResourceGuide = {
   faq: [string, string][];
 };
 
+// Collegamenti scelti per continuità editoriale, non per semplice posizione nell'elenco.
+// Le stesse relazioni funzionano anche nelle versioni tradotte consultabili dagli utenti.
+export const relatedResourceSlugs: Record<string, string[]> = {
+  "scrivere-un-libro-con-intelligenza-artificiale": ["come-compilare-sidebar-scrittore-site", "creare-indice-professionale-libro", "scrivere-capitoli-e-sottocapitoli"],
+  "come-compilare-sidebar-scrittore-site": ["scrivere-un-libro-con-intelligenza-artificiale", "creare-indice-professionale-libro", "gpt-o-deepseek-per-scrivere-libro"],
+  "creare-indice-professionale-libro": ["come-compilare-sidebar-scrittore-site", "scrivere-capitoli-e-sottocapitoli", "controllare-manoscritto-prima-pubblicazione"],
+  "fonti-web-originalita-copyright-libro": ["controllare-manoscritto-prima-pubblicazione", "pubblicare-libro-amazon-kdp", "scrivere-un-libro-con-intelligenza-artificiale"],
+  "scrivere-capitoli-e-sottocapitoli": ["creare-indice-professionale-libro", "controllare-manoscritto-prima-pubblicazione", "salvare-ripristinare-esportare-progetto-editoriale"],
+  "controllare-manoscritto-prima-pubblicazione": ["fonti-web-originalita-copyright-libro", "scrivere-capitoli-e-sottocapitoli", "pubblicare-libro-amazon-kdp"],
+  "salvare-ripristinare-esportare-progetto-editoriale": ["scrivere-un-libro-con-intelligenza-artificiale", "scrivere-capitoli-e-sottocapitoli", "controllare-manoscritto-prima-pubblicazione"],
+  "creare-quiz-ricette-test-prep": ["scrivere-capitoli-e-sottocapitoli", "come-compilare-sidebar-scrittore-site", "scrivere-un-libro-con-intelligenza-artificiale"],
+  "gpt-o-deepseek-per-scrivere-libro": ["come-compilare-sidebar-scrittore-site", "scrivere-un-libro-con-intelligenza-artificiale", "creare-indice-professionale-libro"],
+  "pubblicare-libro-amazon-kdp": ["controllare-manoscritto-prima-pubblicazione", "fonti-web-originalita-copyright-libro", "self-publishing-guida-pratica"],
+  "self-publishing-guida-pratica": ["pubblicare-libro-amazon-kdp", "scrivere-un-libro-con-intelligenza-artificiale", "salvare-ripristinare-esportare-progetto-editoriale"],
+};
+
 export const resources: ResourceGuide[] = [
   {
     slug: "scrivere-un-libro-con-intelligenza-artificiale",
