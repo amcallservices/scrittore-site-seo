@@ -3,8 +3,21 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { resourceUi } from "../../lib/localized-resources";
 import { appUrl, communityUrl, copy, instagramUrl, isLocale, locales, siteUrl, type Locale, whatsappUrl } from "../../lib/site";
+import { functionPageContent } from "../../lib/function-content";
 
 type Props = { params: Promise<{ locale: string }> };
+
+const functionOverviewTitles: Record<Locale, string> = {
+  it: "Tutte le funzioni per creare il tuo libro",
+  en: "Every feature for creating your book",
+  es: "Todas las funciones para crear tu libro",
+  fr: "Toutes les fonctions pour créer votre livre",
+  de: "Alle Funktionen für Ihr Buch",
+  ro: "Toate funcțiile pentru a crea cartea ta",
+  ru: "Все функции для создания вашей книги",
+  ar: "كل الوظائف لإنشاء كتابك",
+  zh: "创作图书所需的全部功能",
+};
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -18,6 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: item.seoTitle,
     description: item.seoDescription,
+    keywords: ["Scrittore Site", ...item.features, item.flowTitle],
     alternates: { canonical: `${siteUrl}/${locale}`, languages },
     openGraph: { title: item.seoTitle, description: item.seoDescription, url: `${siteUrl}/${locale}`, locale: item.locale, type: "website" },
   };
@@ -47,11 +61,12 @@ export default async function LocaleHome({ params }: Props) {
   if (!isLocale(locale)) notFound();
   const t = copy[locale];
   const resources = resourceUi[locale];
+  const functionOverview = functionPageContent[locale];
   const dir = t.direction || "ltr";
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "SoftwareApplication", name: "Scrittore Site", applicationCategory: "WritingApplication", operatingSystem: "Web", description: t.seoDescription, url: appUrl, applicationSubCategory: "Book writing and editorial workspace", featureList: t.features },
+      { "@type": "SoftwareApplication", name: "Scrittore Site", applicationCategory: "WritingApplication", operatingSystem: "Web", description: t.seoDescription, url: appUrl, applicationSubCategory: "Book writing and editorial workspace", featureList: functionOverview.groups.flatMap((group) => group.items) },
       { "@type": "Organization", name: "Scrittore Site", url: siteUrl, sameAs: [instagramUrl], contactPoint: { "@type": "ContactPoint", contactType: "customer support", url: whatsappUrl } },
       { "@type": "WebSite", name: "Scrittore Site", url: siteUrl, inLanguage: t.locale },
       { "@type": "FAQPage", mainEntity: faqEntries(locale).map(([name, text]) => ({ "@type": "Question", name, acceptedAnswer: { "@type": "Answer", text } })) },
@@ -75,6 +90,8 @@ export default async function LocaleHome({ params }: Props) {
     <section className="demo-link"><p>{t.demoText}</p><a className="button ghost" href={appUrl} target="_blank" rel="noopener noreferrer">{t.fullscreen} ↗</a></section>
 
     <section id="features" className="section section-compact"><p className="eyebrow">SCRITTORE SITE</p><h2>{t.featureTitle}</h2><ul className="feature-list">{t.features.map((feature) => <li key={feature}>{feature}</li>)}</ul></section>
+
+    <section className="section function-overview" aria-labelledby="function-overview-title"><p className="eyebrow">{functionOverview.eyebrow}</p><h2 id="function-overview-title">{functionOverviewTitles[locale]}</h2><p className="function-overview-lead">{functionOverview.intro}</p><div className="home-function-grid">{functionOverview.groups.map((group) => <article key={group.title}><h3>{group.title}</h3><p>{group.description}</p><ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul></article>)}</div><p className="function-overview-note">{functionOverview.closing}</p><Link className="button ghost" href={`/${locale}/funzioni`}>{t.nav[0]} →</Link></section>
 
     <section id="engines" className="section engines section-compact"><p className="eyebrow">AI</p><h2>{t.engineTitle}</h2><div className="engine-grid"><article><h3>GPT-5.4</h3><p>{t.gpt}</p></article><article><h3>DeepSeek V4 Pro</h3><p>{t.deepseek}</p></article></div><p className="note">{t.creditNote}</p></section>
 
