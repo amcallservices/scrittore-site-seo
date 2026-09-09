@@ -67,16 +67,16 @@ export default async function LocaleHome({ params }: Props) {
     "@context": "https://schema.org",
     "@graph": [
       { "@type": "SoftwareApplication", name: "Scrittore Site", applicationCategory: "WritingApplication", operatingSystem: "Web", description: t.seoDescription, url: appUrl, applicationSubCategory: "Book writing and editorial workspace", featureList: functionOverview.groups.flatMap((group) => group.items) },
-      { "@type": "Organization", name: "Scrittore Site", url: siteUrl, sameAs: [instagramUrl], contactPoint: { "@type": "ContactPoint", contactType: "customer support", url: whatsappUrl } },
+      { "@type": "Organization", name: "Scrittore Site", url: siteUrl, logo: `${siteUrl}/brand/scrittore-site-logo.png`, sameAs: [instagramUrl], contactPoint: { "@type": "ContactPoint", contactType: "customer support", url: whatsappUrl } },
       { "@type": "WebSite", name: "Scrittore Site", url: siteUrl, inLanguage: t.locale },
       { "@type": "FAQPage", mainEntity: faqEntries(locale).map(([name, text]) => ({ "@type": "Question", name, acceptedAnswer: { "@type": "Answer", text } })) },
     ],
   };
 
-  return <main dir={dir} lang={locale}>
+  return <main dir={dir} lang={locale} className="site-home">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     <header className="site-header">
-      <Link href={`/${locale}`} className="brand">Scrittore <span>Site</span></Link>
+      <Link href={`/${locale}`} className="brand brand-logo" aria-label="Scrittore Site"><img src="/brand/scrittore-site-logo.png" alt="Scrittore Site" /></Link>
       <nav aria-label="Main navigation"><a href="#features">{t.nav[0]}</a><Link href={`/${locale}/come-funziona`}>{t.nav[1]}</Link><a href="#engines">{t.nav[2]}</a><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><Link href={`/${locale}/risorse`}>{resources.nav}</Link><a href="#faq">{t.nav[4]}</a></nav>
       <details className="language-picker"><summary>{t.language}</summary><div>{locales.map((code) => <Link href={`/${code}`} key={code}>{copy[code].language}</Link>)}</div></details>
     </header>
