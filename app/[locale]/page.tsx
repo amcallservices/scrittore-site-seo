@@ -31,6 +31,20 @@ const madeInItaly: Record<Locale, string> = {
   zh: "在意大利设计，陪伴作者从想法走向手稿。",
 };
 
+const reviewLabels: Record<Locale, string> = {
+  it: "Lascia una recensione",
+  en: "Leave a review",
+  es: "Deja una reseña",
+  fr: "Laisser un avis",
+  de: "Bewertung schreiben",
+  ro: "Lasă o recenzie",
+  ru: "Оставить отзыв",
+  ar: "اترك مراجعة",
+  zh: "留下评价",
+};
+
+const trustpilotReviewUrl = "https://it.trustpilot.com/review/scrittore.site";
+
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
@@ -89,7 +103,7 @@ export default async function LocaleHome({ params }: Props) {
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     <header className="site-header">
       <Link href={`/${locale}`} className="brand brand-logo" aria-label="Scrittore Site"><img src="/brand/scrittore-site-logo.png" alt="Scrittore Site" /></Link>
-      <nav aria-label="Main navigation"><a href="#features">{t.nav[0]}</a><Link href={`/${locale}/come-funziona`}>{t.nav[1]}</Link><a href="#engines">{t.nav[2]}</a><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><Link href={`/${locale}/risorse`}>{resources.nav}</Link><a href="#faq">{t.nav[4]}</a></nav>
+      <nav aria-label="Main navigation"><a href="#features">{t.nav[0]}</a><Link href={`/${locale}/come-funziona`}>{t.nav[1]}</Link><a href="#engines">{t.nav[2]}</a><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><Link href={`/${locale}/risorse`}>{resources.nav}</Link><a href={trustpilotReviewUrl} target="_blank" rel="noopener noreferrer">{reviewLabels[locale]}</a><a href="#faq">{t.nav[4]}</a></nav>
       <details className="language-picker"><summary>{t.language}</summary><div>{locales.map((code) => <Link href={`/${code}`} key={code}>{copy[code].language}</Link>)}</div></details>
     </header>
 
