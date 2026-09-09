@@ -19,6 +19,18 @@ const functionOverviewTitles: Record<Locale, string> = {
   zh: "创作图书所需的全部功能",
 };
 
+const madeInItaly: Record<Locale, string> = {
+  it: "Progettato in Italia, per accompagnare autori e autrici dall'idea al manoscritto.",
+  en: "Designed in Italy to guide authors from an idea to a manuscript.",
+  es: "Diseñado en Italia para acompañar a autores y autoras de la idea al manuscrito.",
+  fr: "Conçu en Italie pour accompagner les auteurs et autrices de l'idée au manuscrit.",
+  de: "In Italien entwickelt, um Autorinnen und Autoren von der Idee bis zum Manuskript zu begleiten.",
+  ro: "Creat în Italia pentru a însoți autorii de la idee la manuscris.",
+  ru: "Создано в Италии, чтобы сопровождать авторов от идеи до рукописи.",
+  ar: "صُمم في إيطاليا لمرافقة المؤلفين من الفكرة إلى المخطوطة.",
+  zh: "在意大利设计，陪伴作者从想法走向手稿。",
+};
+
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
@@ -82,7 +94,7 @@ export default async function LocaleHome({ params }: Props) {
     </header>
 
     <section className="hero hero-after-demo">
-      <div><p className="eyebrow">WRITING WORKSPACE</p><h1>{t.hero}</h1><p className="lead">{t.lead}</p><div className="actions"><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a><Link className="button ghost" href={`/${locale}/come-funziona`}>{t.secondary}</Link></div></div>
+      <div><p className="eyebrow">WRITING WORKSPACE</p><h1>{t.hero}</h1><p className="lead">{t.lead}</p><p className="made-in-italy">🇮🇹 {madeInItaly[locale]}</p><div className="actions"><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a><Link className="button ghost" href={`/${locale}/come-funziona`}>{t.secondary}</Link></div></div>
     </section>
 
     <section className="demo demo-first" aria-label="Scrittore Site demo"><div className="demo-intro"><p className="eyebrow">LIVE DEMO</p><h2>{t.demoTitle}</h2><p>{t.demoText}</p></div><div className="frame-wrap"><iframe src={`${appUrl}?embed=true`} title="Scrittore Site demo" loading="eager" /></div></section>
