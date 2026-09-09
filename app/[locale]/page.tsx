@@ -43,6 +43,18 @@ const reviewLabels: Record<Locale, string> = {
   zh: "留下评价",
 };
 
+const menuLabels: Record<Locale, string> = {
+  it: "Menu",
+  en: "Menu",
+  es: "Menú",
+  fr: "Menu",
+  de: "Menü",
+  ro: "Meniu",
+  ru: "Меню",
+  ar: "القائمة",
+  zh: "菜单",
+};
+
 const trustpilotReviewUrl = "https://it.trustpilot.com/review/scrittore.site";
 
 export function generateStaticParams() {
@@ -104,6 +116,7 @@ export default async function LocaleHome({ params }: Props) {
     <header className="site-header">
       <Link href={`/${locale}`} className="brand brand-logo" aria-label="Scrittore Site"><img src="/brand/scrittore-site-logo.png" alt="Scrittore Site" /></Link>
       <nav aria-label="Main navigation"><a href="#features">{t.nav[0]}</a><Link href={`/${locale}/come-funziona`}>{t.nav[1]}</Link><a href="#engines">{t.nav[2]}</a><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><Link href={`/${locale}/risorse`}>{resources.nav}</Link><a href={trustpilotReviewUrl} target="_blank" rel="noopener noreferrer">{reviewLabels[locale]}</a><a href="#faq">{t.nav[4]}</a></nav>
+      <details className="mobile-menu"><summary>☰ {menuLabels[locale]}</summary><nav aria-label={menuLabels[locale]}><a href="#features">{t.nav[0]}</a><Link href={`/${locale}/come-funziona`}>{t.nav[1]}</Link><a href="#engines">{t.nav[2]}</a><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><Link href={`/${locale}/risorse`}>{resources.nav}</Link><a href={trustpilotReviewUrl} target="_blank" rel="noopener noreferrer">{reviewLabels[locale]}</a><a href="#faq">{t.nav[4]}</a></nav></details>
       <details className="language-picker"><summary>{t.language}</summary><div>{locales.map((code) => <Link href={`/${code}`} key={code}>{copy[code].language}</Link>)}</div></details>
     </header>
 
