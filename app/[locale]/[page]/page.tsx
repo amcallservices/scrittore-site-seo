@@ -5,6 +5,7 @@ import { appUrl, copy, isLocale, locales, packages, siteUrl, type Locale } from 
 import { pageContent } from "../../../lib/page-content";
 import { functionPageContent } from "../../../lib/function-content";
 import { resourceUi } from "../../../lib/localized-resources";
+import { BrandLogo } from "../../../lib/brand-logo";
 
 const pages = ["funzioni", "prezzi", "come-funziona", "faq", "privacy", "termini"] as const;
 type PageName = (typeof pages)[number];
@@ -58,5 +59,5 @@ export default async function InformationPage({ params }: Props) {
     privacy: <><p>{content.privacy[0]}</p><p>{content.privacy[1]}</p></>,
     termini: <><p>{content.terms[0]}</p><p>{content.terms[1]}</p></>,
   };
-  return <main dir={dir} lang={locale} className="legal-page"><header className="site-header"><Link href={`/${locale}`} className="brand brand-logo" aria-label="Scrittore Site"><img src="/brand/scrittore-site-logo.png" alt="Scrittore Site" /></Link><Link className="back" href={`/${locale}`}>{content.home}</Link></header><article><p className="eyebrow">SCRITTORE SITE</p><h1>{title}</h1>{body[name]}<a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a></article></main>;
+  return <main dir={dir} lang={locale} className="legal-page"><header className="site-header"><BrandLogo locale={locale} /><Link className="back" href={`/${locale}`}>{content.home}</Link></header><article><p className="eyebrow">SCRITTORE SITE</p><h1>{title}</h1>{body[name]}<a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a></article></main>;
 }

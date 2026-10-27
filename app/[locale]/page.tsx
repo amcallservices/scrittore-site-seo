@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { resourceUi } from "../../lib/localized-resources";
 import { appUrl, communityUrl, copy, instagramUrl, isLocale, locales, siteUrl, type Locale, whatsappUrl } from "../../lib/site";
 import { functionPageContent } from "../../lib/function-content";
+import { BrandLogo } from "../../lib/brand-logo";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -17,6 +18,18 @@ const functionOverviewTitles: Record<Locale, string> = {
   ru: "Все функции для создания вашей книги",
   ar: "كل الوظائف لإنشاء كتابك",
   zh: "创作图书所需的全部功能",
+};
+
+const moreFunctionLabels: Record<Locale, string> = {
+  it: "Altre funzioni di questa fase",
+  en: "More features in this stage",
+  es: "Más funciones de esta etapa",
+  fr: "Autres fonctions de cette étape",
+  de: "Weitere Funktionen dieser Phase",
+  ro: "Alte funcții ale acestei etape",
+  ru: "Другие функции этого этапа",
+  ar: "مزيد من وظائف هذه المرحلة",
+  zh: "此阶段的更多功能",
 };
 
 const madeInItaly: Record<Locale, string> = {
@@ -43,6 +56,18 @@ const heroSeoTitles: Record<Locale, string> = {
   zh: "意大利 AI 写作软件：创作图书并为 Amazon KDP 做准备",
 };
 
+const heroDisplayTitles: Record<Locale, string> = {
+  it: "Scrivi il tuo libro con AI",
+  en: "Write your book with AI",
+  es: "Escribe tu libro con IA",
+  fr: "Écrivez votre livre avec l'IA",
+  de: "Schreiben Sie Ihr Buch mit KI",
+  ro: "Scrie-ți cartea cu AI",
+  ru: "Напишите свою книгу с ИИ",
+  ar: "اكتب كتابك بالذكاء الاصطناعي",
+  zh: "用 AI 写你的书",
+};
+
 const heroSeoLeads: Record<Locale, string> = {
   it: "Scrittore Site è un software AI italiano che ti accompagna dall'idea al manoscritto: definisci il progetto, crea l'indice, scrivi e revisiona i capitoli, controlla i contenuti ed esporta il libro in Word o PDF. È pensato anche per autori e self publisher che preparano libri destinati ad Amazon KDP, senza richiedere prompt complessi.",
   en: "Scrittore Site is Italian AI software that guides you from an idea to a manuscript: define the project, create the outline, write and revise chapters, review the content and export the book in Word or PDF. It is also designed for authors and self-publishers preparing books for Amazon KDP, without requiring complex prompts.",
@@ -55,16 +80,16 @@ const heroSeoLeads: Record<Locale, string> = {
   zh: "Scrittore Site 是一款意大利 AI 软件，陪伴您从想法走向手稿：确定项目、创建目录、撰写并修订章节、检查内容，并将图书导出为 Word 或 PDF。它同样适合为 Amazon KDP 准备图书的作者和自出版者，无需复杂提示词。",
 };
 
-const editorialMemory: Record<Locale, string> = {
-  it: "Un libro, non una raccolta di risposte AI: la memoria editoriale aiuta a mantenere il filo del progetto e a ridurre ripetizioni e incoerenze tra le sezioni.",
-  en: "A book, not a collection of AI answers: editorial memory helps preserve the thread of the project and reduce repetition and inconsistency between sections.",
-  es: "Un libro, no una colección de respuestas de IA: la memoria editorial ayuda a mantener el hilo del proyecto y a reducir repeticiones e incoherencias entre secciones.",
-  fr: "Un livre, pas une collection de réponses d'IA : la mémoire éditoriale aide à préserver le fil du projet et à réduire répétitions et incohérences entre les sections.",
-  de: "Ein Buch, keine Sammlung von KI-Antworten: Das redaktionelle Gedächtnis hilft, den roten Faden zu bewahren und Wiederholungen sowie Unstimmigkeiten zwischen Abschnitten zu verringern.",
-  ro: "O carte, nu o colecție de răspunsuri AI: memoria editorială ajută la păstrarea firului proiectului și la reducerea repetițiilor și incoerențelor dintre secțiuni.",
-  ru: "Книга, а не набор ответов ИИ: редакторская память помогает сохранять нить проекта и уменьшать повторы и несоответствия между разделами.",
-  ar: "كتاب، وليس مجموعة من إجابات الذكاء الاصطناعي: تساعد الذاكرة التحريرية على الحفاظ على خيط المشروع وتقليل التكرار وعدم الاتساق بين الأقسام.",
-  zh: "一本书，而不是一组 AI 回答：编辑记忆有助于保持项目脉络，减少章节之间的重复和不一致。",
+const heroVisibleLeads: Record<Locale, string> = {
+  it: "Dall'idea al manoscritto per Amazon KDP: prepara l'indice, scrivi e rivedi i capitoli, poi esporta in Word o PDF.",
+  en: "From idea to manuscript for Amazon KDP: plan the outline, write and revise chapters, then export in Word or PDF.",
+  es: "De la idea al manuscrito para Amazon KDP: prepara el índice, escribe y revisa los capítulos y exporta en Word o PDF.",
+  fr: "De l'idée au manuscrit pour Amazon KDP : préparez le plan, rédigez et révisez les chapitres, puis exportez en Word ou PDF.",
+  de: "Von der Idee zum Manuskript für Amazon KDP: Gliederung planen, Kapitel schreiben und überarbeiten, dann als Word oder PDF exportieren.",
+  ro: "De la idee la manuscris pentru Amazon KDP: pregătește cuprinsul, scrie și revizuiește capitolele, apoi exportă în Word sau PDF.",
+  ru: "От идеи до рукописи для Amazon KDP: составьте план, напишите и отредактируйте главы, затем экспортируйте в Word или PDF.",
+  ar: "من الفكرة إلى المخطوطة لـ Amazon KDP: جهّز الفهرس، واكتب الفصول وراجعها، ثم صدّر بصيغة Word أو PDF.",
+  zh: "从想法到用于 Amazon KDP 的手稿：规划目录、撰写并修订章节，最后导出为 Word 或 PDF。",
 };
 
 const gptEngineDescriptions: Record<Locale, string> = {
@@ -164,23 +189,32 @@ export default async function LocaleHome({ params }: Props) {
   return <main dir={dir} lang={locale} className="site-home">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     <header className="site-header">
-      <Link href={`/${locale}`} className="brand brand-logo" aria-label="Scrittore Site"><img src="/brand/scrittore-site-logo.png" alt="Scrittore Site" /></Link>
+      <BrandLogo locale={locale} />
       <nav aria-label="Main navigation"><a href="#features">{t.nav[0]}</a><Link href={`/${locale}/come-funziona`}>{t.nav[1]}</Link><a href="#engines">{t.nav[2]}</a><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><Link href={`/${locale}/risorse`}>{resources.nav}</Link><a href={trustpilotReviewUrl} target="_blank" rel="noopener noreferrer">{reviewLabels[locale]}</a><a href="#faq">{t.nav[4]}</a></nav>
       <details className="mobile-menu"><summary>☰ {menuLabels[locale]}</summary><nav aria-label={menuLabels[locale]}><a href="#features">{t.nav[0]}</a><Link href={`/${locale}/come-funziona`}>{t.nav[1]}</Link><a href="#engines">{t.nav[2]}</a><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><Link href={`/${locale}/risorse`}>{resources.nav}</Link><a href={trustpilotReviewUrl} target="_blank" rel="noopener noreferrer">{reviewLabels[locale]}</a><a href="#faq">{t.nav[4]}</a></nav></details>
       <details className="language-picker"><summary>{t.language}</summary><div>{locales.map((code) => <Link href={`/${code}`} key={code}>{copy[code].language}</Link>)}</div></details>
     </header>
 
     <section className="hero hero-after-demo">
-      <div><p className="eyebrow">WRITING WORKSPACE</p><h1>{heroSeoTitles[locale]}</h1><p className="hero-slogan">{t.hero}</p><p className="lead">{heroSeoLeads[locale]}</p><p className="made-in-italy">🇮🇹 {madeInItaly[locale]}</p><p className="editorial-memory">🧠 {editorialMemory[locale]}</p><div className="actions"><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a><Link className="button ghost" href={`/${locale}/come-funziona`}>{t.secondary}</Link></div></div>
+      <div className="hero-copy">
+        <h1>{heroDisplayTitles[locale]}</h1>
+        <p className="lead">{heroVisibleLeads[locale]}</p>
+        <div className="actions"><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a><Link className="button ghost" href={`/${locale}/come-funziona`}>{t.secondary}</Link></div>
+        <p className="made-in-italy">🇮🇹 {madeInItaly[locale]}</p>
+      </div>
+      <aside className="hero-path" aria-label={functionOverview.eyebrow}>
+        <p className="hero-path-kicker">{functionOverview.eyebrow}</p>
+        <ol>{[functionOverview.groups[0], functionOverview.groups[2], functionOverview.groups[5]].map((group, index) => <li key={group.title}><span>{String(index + 1).padStart(2, "0")}</span><div><h2>{group.title.replace(/^\d+\.\s*/, "")}</h2><p>{group.description}</p></div></li>)}</ol>
+      </aside>
     </section>
 
-    <section className="demo demo-first" aria-label="Scrittore Site demo"><div className="demo-intro"><p className="eyebrow">LIVE DEMO</p><h2>{t.demoTitle}</h2><p>{t.demoText}</p></div><div className="frame-wrap"><iframe src={`${appUrl}?embed=true`} title="Scrittore Site demo" loading="eager" /></div></section>
+    <section className="demo demo-first" aria-label="Scrittore Site demo"><div className="demo-intro"><p className="eyebrow">LIVE DEMO</p><h2>{t.demoTitle}</h2><p>{t.demoText}</p></div><div className="frame-wrap"><iframe src={`${appUrl}?embed=true`} title="Scrittore Site demo" loading="lazy" /></div></section>
 
     <section className="demo-link"><p>{t.demoText}</p><a className="button ghost" href={appUrl} target="_blank" rel="noopener noreferrer">{t.fullscreen} ↗</a></section>
 
     <section id="features" className="section section-compact"><p className="eyebrow">SCRITTORE SITE</p><h2>{t.featureTitle}</h2><ul className="feature-list">{t.features.map((feature) => <li key={feature}>{feature}</li>)}</ul></section>
 
-    <section className="section function-overview" aria-labelledby="function-overview-title"><p className="eyebrow">{functionOverview.eyebrow}</p><h2 id="function-overview-title">{functionOverviewTitles[locale]}</h2><p className="function-overview-lead">{functionOverview.intro}</p><div className="home-function-grid">{functionOverview.groups.map((group) => <article key={group.title}><h3>{group.title}</h3><p>{group.description}</p><ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul></article>)}</div><p className="function-overview-note">{functionOverview.closing}</p><Link className="button ghost" href={`/${locale}/funzioni`}>{t.nav[0]} →</Link></section>
+    <section className="section function-overview" aria-labelledby="function-overview-title"><p className="eyebrow">{functionOverview.eyebrow}</p><h2 id="function-overview-title">{functionOverviewTitles[locale]}</h2><p className="function-overview-lead">{functionOverview.intro}</p><div className="home-function-grid">{functionOverview.groups.map((group) => <article key={group.title}><h3>{group.title}</h3><p>{group.description}</p><ul>{group.items.slice(0, 2).map((item) => <li key={item}>{item}</li>)}</ul>{group.items.length > 2 && <details><summary>{moreFunctionLabels[locale]}</summary><ul>{group.items.slice(2).map((item) => <li key={item}>{item}</li>)}</ul></details>}</article>)}</div><p className="function-overview-note">{functionOverview.closing}</p><Link className="button ghost" href={`/${locale}/funzioni`}>{t.nav[0]} →</Link></section>
 
     <section id="engines" className="section engines section-compact"><p className="eyebrow">AI</p><h2>{t.engineTitle}</h2><div className="engine-grid"><article><h3>GPT-5.4</h3><p>{gptEngineDescriptions[locale]}</p></article><article><h3>DeepSeek V4 Pro</h3><p>{t.deepseek}</p></article></div><p className="note">{t.creditNote}</p></section>
 
