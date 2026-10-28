@@ -128,6 +128,18 @@ const menuLabels: Record<Locale, string> = {
   zh: "菜单",
 };
 
+const startLabels: Record<Locale, string> = {
+  it: "Prova il software",
+  en: "Try the software",
+  es: "Prueba el software",
+  fr: "Essayer le logiciel",
+  de: "Software testen",
+  ro: "Încearcă software-ul",
+  ru: "Попробовать программу",
+  ar: "جرّب البرنامج",
+  zh: "试用软件",
+};
+
 const trustpilotReviewUrl = "https://it.trustpilot.com/review/scrittore.site";
 
 export function generateStaticParams() {
@@ -190,7 +202,7 @@ export default async function LocaleHome({ params }: Props) {
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     <header className="site-header">
       <BrandLogo locale={locale} />
-      <nav aria-label="Main navigation"><a href="#features">{t.nav[0]}</a><Link href={`/${locale}/come-funziona`}>{t.nav[1]}</Link><a href="#engines">{t.nav[2]}</a><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><Link href={`/${locale}/risorse`}>{resources.nav}</Link><a href={trustpilotReviewUrl} target="_blank" rel="noopener noreferrer">{reviewLabels[locale]}</a><a href="#faq">{t.nav[4]}</a></nav>
+      <nav aria-label="Main navigation"><Link href={`/${locale}/come-funziona`}>{t.nav[1]}</Link><a href="#features">{t.nav[0]}</a><Link href={`/${locale}/risorse`}>{resources.nav}</Link><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><a className="nav-primary" href={appUrl} target="_blank" rel="noopener noreferrer">{startLabels[locale]}</a></nav>
       <details className="mobile-menu"><summary>☰ {menuLabels[locale]}</summary><nav aria-label={menuLabels[locale]}><a href="#features">{t.nav[0]}</a><Link href={`/${locale}/come-funziona`}>{t.nav[1]}</Link><a href="#engines">{t.nav[2]}</a><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><Link href={`/${locale}/risorse`}>{resources.nav}</Link><a href={trustpilotReviewUrl} target="_blank" rel="noopener noreferrer">{reviewLabels[locale]}</a><a href="#faq">{t.nav[4]}</a></nav></details>
       <details className="language-picker"><summary>{t.language}</summary><div>{locales.map((code) => <Link href={`/${code}`} key={code}>{copy[code].language}</Link>)}</div></details>
     </header>
@@ -204,11 +216,11 @@ export default async function LocaleHome({ params }: Props) {
       </div>
       <aside className="hero-path" aria-label={functionOverview.eyebrow}>
         <p className="hero-path-kicker">{functionOverview.eyebrow}</p>
-        <ol>{[functionOverview.groups[0], functionOverview.groups[2], functionOverview.groups[5]].map((group, index) => <li key={group.title}><span>{String(index + 1).padStart(2, "0")}</span><div><h2>{group.title.replace(/^\d+\.\s*/, "")}</h2><p>{group.description}</p></div></li>)}</ol>
+        <ol>{[functionOverview.groups[0], functionOverview.groups[2], functionOverview.groups[5]].map((group, index) => <li key={group.title}><span>{String(index + 1).padStart(2, "0")}</span><a href={["#demo", "#features", "#engines"][index]}><h2>{group.title.replace(/^\d+\.\s*/, "")}</h2><p>{group.description}</p></a></li>)}</ol>
       </aside>
     </section>
 
-    <section className="demo demo-first" aria-label="Scrittore Site demo"><div className="demo-intro"><p className="eyebrow">LIVE DEMO</p><h2>{t.demoTitle}</h2><p>{t.demoText}</p></div><div className="frame-wrap"><iframe src={`${appUrl}?embed=true`} title="Scrittore Site demo" loading="lazy" /></div></section>
+    <section id="demo" className="demo demo-first" aria-label="Scrittore Site demo"><div className="demo-intro"><p className="eyebrow">LIVE DEMO</p><h2>{t.demoTitle}</h2><p>{t.demoText}</p></div><div className="frame-wrap"><iframe src={`${appUrl}?embed=true`} title="Scrittore Site demo" loading="lazy" /></div></section>
 
     <section className="demo-link"><p>{t.demoText}</p><a className="button ghost" href={appUrl} target="_blank" rel="noopener noreferrer">{t.fullscreen} ↗</a></section>
 
@@ -221,6 +233,6 @@ export default async function LocaleHome({ params }: Props) {
     <section className="section resources-promo section-compact"><p className="eyebrow">{resources.eyebrow}</p><h2>{resources.indexTitle}</h2><p className="essential-copy">{resources.indexLead}</p><Link className="button ghost" href={`/${locale}/risorse`}>{resources.all} →</Link></section>
     <section id="faq" className="section faq section-compact"><p className="eyebrow">FAQ</p><h2>{t.faqTitle}</h2><Faq locale={locale} /></section>
     <section className="closing closing-compact"><h2>{t.finalTitle}</h2><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a></section>
-    <footer><span>{t.copyright} {new Date().getFullYear()}</span><div><Link href={`/${locale}/risorse`}>{resources.nav}</Link><Link href={`/${locale}/funzioni`}>{t.nav[0]}</Link><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><Link href={`/${locale}/faq`}>FAQ</Link><Link href={`/${locale}/privacy`}>Privacy</Link><a href={communityUrl} target="_blank" rel="noopener noreferrer">{t.community}</a><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">{t.support}</a></div></footer>
+    <footer><span>{t.copyright} {new Date().getFullYear()}</span><div><Link href={`/${locale}/risorse`}>{resources.nav}</Link><Link href={`/${locale}/funzioni`}>{t.nav[0]}</Link><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><Link href={`/${locale}/faq`}>FAQ</Link><Link href={`/${locale}/privacy`}>Privacy</Link><a href={trustpilotReviewUrl} target="_blank" rel="noopener noreferrer">{reviewLabels[locale]}</a><a href={communityUrl} target="_blank" rel="noopener noreferrer">{t.community}</a><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">{t.support}</a></div></footer>
   </main>;
 }

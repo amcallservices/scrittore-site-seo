@@ -129,3 +129,132 @@ body .resources-page .resources-hero>p:last-child,body .article-page .article-le
   .brand-symbol img,.site-home .brand-logo img { width:72px; height:72px; }
   .brand .brand-wordmark { font-size:1.15rem; }
 }
+
+/* Direzione visiva 2026: una lettura più ordinata, con pochi elementi forti. */
+.site-home,
+.legal-page,
+.resources-page,
+.article-page { background:#061323; }
+.site-header {
+  width:min(1200px,calc(100% - 40px));
+  min-height:88px;
+  border-bottom:0 !important;
+}
+.site-header nav { align-items:center; gap:6px; }
+.site-header nav a {
+  padding:.5rem .63rem;
+  border-radius:999px;
+  color:#bdd5e7;
+  transition:background-color .18s ease,color .18s ease,transform .18s ease;
+}
+.site-header nav a:hover { background:#10334f; color:#fff; transform:translateY(-1px); }
+.site-header nav .nav-primary {
+  margin-left:.15rem;
+  background:#1687ce;
+  color:#fff;
+}
+.site-header nav .nav-primary:hover { background:#2aa1e4; color:#fff; }
+
+.site-home .hero-after-demo {
+  width:min(1200px,calc(100% - 40px));
+  min-height:540px;
+  grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);
+  gap:clamp(34px,6vw,88px);
+  padding:76px 0 68px;
+}
+.site-home .hero-after-demo h1 {
+  max-width:12ch;
+  font-size:clamp(3.6rem,6vw,6.35rem);
+  line-height:.92;
+  letter-spacing:-.065em;
+}
+.site-home .hero-after-demo .lead { max-width:530px; font-size:1.1rem; line-height:1.62; }
+.button { border-radius:999px; transition:transform .18s ease,background-color .18s ease,color .18s ease; }
+.button:hover { transform:translateY(-2px); }
+.site-home .hero-after-demo .primary { min-width:205px; }
+.site-home .hero-path {
+  padding:13px 25px;
+  border:0;
+  border-radius:28px;
+  background:#0d2940;
+}
+.site-home .hero-path-kicker { margin:10px 0 5px; color:#83d7fb; letter-spacing:.08em; }
+.site-home .hero-path li { border-bottom-color:#254963; }
+.site-home .hero-path li>span {
+  display:grid;
+  width:2.15rem;
+  height:2.15rem;
+  place-items:center;
+  border-radius:50%;
+  background:#1a5877;
+  color:#fff;
+  font-size:1rem;
+}
+.site-home .hero-path li a { display:block; border-radius:12px; color:inherit; text-decoration:none; transition:transform .18s ease; }
+.site-home .hero-path li a:hover { transform:translateX(4px); }
+.site-home .hero-path li a:focus-visible { outline:3px solid #91d9ff; outline-offset:4px; }
+
+.site-home .demo { background:#081a2d; border:0; }
+.site-home .demo-first { padding-top:56px; }
+.site-home .demo-intro { max-width:680px; }
+.site-home .demo h2 { max-width:680px; font-size:clamp(2.5rem,4.4vw,4rem); }
+.site-home .frame-wrap { max-width:1280px; padding:8px; border:0; border-radius:28px; background:#0e324e; box-shadow:none; }
+.site-home .frame-wrap iframe { border-radius:21px; }
+.site-home .demo-link { padding-bottom:10px; }
+
+.site-home .section { width:min(1120px,calc(100% - 40px)); padding:86px 0; }
+.site-home .section h2 { max-width:760px; font-size:clamp(2.45rem,4.2vw,4rem); }
+.site-home .feature-list { max-width:860px; gap:9px; }
+.site-home .feature-list li { padding:9px 13px; border:0; border-radius:999px; background:#10334f; color:#d7eeff; }
+.site-home .function-overview { text-align:center; }
+.site-home .function-overview h2,
+.site-home .function-overview-lead { margin-left:auto; margin-right:auto; }
+.site-home .home-function-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; text-align:left; }
+.site-home .home-function-grid article { border:0; border-radius:22px; background:#0d2940; box-shadow:none; transition:transform .2s ease,background-color .2s ease; }
+.site-home .home-function-grid article:hover { background:#123852; transform:translateY(-4px); }
+.site-home .home-function-grid article:nth-child(2) { background:#10334f; }
+.site-home .home-function-grid article:nth-child(3) { background:#123c50; }
+.site-home .function-overview-note { border-left:0; border-radius:18px; background:#10334f; text-align:left; }
+.site-home .engines { width:100%; background:#091f34; }
+.site-home .engine-grid { gap:16px; }
+.site-home .engine-grid article { border:0; border-radius:24px; box-shadow:none; }
+.site-home .faq-list details { border:0; border-radius:18px; background:#0d2940; }
+.site-home .closing { width:min(1120px,calc(100% - 40px)); margin-bottom:78px; border-radius:30px; background:#124764; }
+.site-home footer { width:min(1120px,calc(100% - 40px)); border-top:0; padding-top:0; }
+
+.resources-page .resources-hero,
+.article-page .resource-article,
+.legal-page article { width:min(900px,calc(100% - 40px)); }
+.resources-page .resources-hero { margin-top:72px; }
+.resources-page .resource-grid { width:min(1120px,calc(100% - 40px)); gap:16px; }
+.resources-page .resource-grid article,
+.article-page .article-faq,
+.article-page .related-guides a,
+.legal-page article,
+.legal-page .simple-packages article { border:0; border-radius:22px; box-shadow:none; }
+.resources-page .resource-grid article { transition:transform .2s ease,background-color .2s ease; }
+.resources-page .resource-grid article:hover { border:0; background:#123852; transform:translateY(-4px); }
+.article-page .resource-cta,
+.article-page .article-cta { border:0; border-radius:28px; background:#124764; }
+
+@media (max-width:950px) {
+  .site-home .hero-after-demo { min-height:0; grid-template-columns:1fr; padding:52px 0 44px; }
+  .site-home .hero-after-demo h1 { max-width:14ch; }
+  .site-home .hero-path { max-width:720px; }
+  .site-home .home-function-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:620px) {
+  .site-header { width:calc(100% - 28px); min-height:72px; }
+  .site-home .hero-after-demo,
+  .site-home .section,
+  .site-home .closing,
+  .site-home footer { width:calc(100% - 28px); }
+  .site-home .hero-after-demo { padding:35px 0 32px; }
+  .site-home .hero-after-demo h1 { max-width:100%; font-size:clamp(3.05rem,14vw,4.3rem); }
+  .site-home .hero-after-demo .lead { font-size:1rem; }
+  .site-home .hero-path { border-radius:22px; }
+  .site-home .demo-first { padding-top:38px; }
+  .site-home .section { padding:60px 0; }
+  .site-home .home-function-grid { grid-template-columns:1fr; }
+  .site-home .closing { margin-bottom:52px; }
+}
