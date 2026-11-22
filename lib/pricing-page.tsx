@@ -53,7 +53,7 @@ export function PricingPage({ locale }: { locale: Locale }) {
         <a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a>
       </section>
 
-      <footer><span>{t.copyright} {new Date().getFullYear()}</span><div><Link href={`/${locale}/privacy`}>Privacy</Link><Link href={`/${locale}/termini`}>{ui.legal}</Link><Link href={`/${locale}/faq`}>FAQ</Link></div></footer>
+      <footer><span>{t.copyright} {new Date().getFullYear()}</span><div><Link href={`/${locale}/privacy`}>Privacy</Link><Link href={`/${locale}/faq`}>FAQ</Link></div></footer>
     </main>
   );
 }

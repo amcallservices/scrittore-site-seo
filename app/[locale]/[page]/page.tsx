@@ -8,7 +8,7 @@ import { resourceUi } from "../../../lib/localized-resources";
 import { BrandLogo } from "../../../lib/brand-logo";
 import { PricingPage } from "../../../lib/pricing-page";
 
-const pages = ["funzioni", "prezzi", "come-funziona", "faq", "privacy", "termini"] as const;
+const pages = ["funzioni", "prezzi", "come-funziona", "faq", "privacy"] as const;
 type PageName = (typeof pages)[number];
 type Props = { params: Promise<{ locale: string; page: string }> };
 
@@ -19,7 +19,7 @@ export function generateStaticParams() {
 function titleFor(locale: Locale, page: PageName) {
   const content = pageContent[locale];
   const local: Record<PageName, string> = {
-    funzioni: copy[locale].nav[0], prezzi: copy[locale].pricingTitle, "come-funziona": copy[locale].nav[1], faq: copy[locale].faqTitle, privacy: content.privacyTitle, termini: content.termsTitle,
+    funzioni: copy[locale].nav[0], prezzi: copy[locale].pricingTitle, "come-funziona": copy[locale].nav[1], faq: copy[locale].faqTitle, privacy: content.privacyTitle,
   };
   return local[page];
 }
@@ -32,7 +32,6 @@ function descriptionFor(locale: Locale, page: PageName) {
     "come-funziona": functionPageContent[locale].intro,
     faq: t.creditNote,
     privacy: pageContent[locale].privacy[0],
-    termini: pageContent[locale].terms[0],
   };
   return descriptions[page];
 }
@@ -59,7 +58,6 @@ export default async function InformationPage({ params }: Props) {
     "come-funziona": <><p className="page-intro">{functionPageContent[locale].intro}</p><div className="workflow-steps">{functionPageContent[locale].groups.map((group) => <section key={group.title} className="workflow-step"><h2>{group.title}</h2><p>{group.description}</p><ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul></section>)}</div><p className="function-note">{functionPageContent[locale].closing}</p><div className="workflow-actions"><Link className="button ghost" href={`/${locale}/funzioni`}>{t.nav[0]} →</Link><Link className="button ghost" href={`/${locale}/risorse`}>{resourceUi[locale].nav} →</Link><Link className="button primary" href={`/${locale}/prezzi`}>{t.nav[3]} →</Link></div></>,
     faq: <><h2>{t.faqTitle}</h2><p>{t.creditNote}</p><p>{content.faqText}</p></>,
     privacy: <><p>{content.privacy[0]}</p><p>{content.privacy[1]}</p></>,
-    termini: <><p>{content.terms[0]}</p><p>{content.terms[1]}</p></>,
   };
   return <main dir={dir} lang={locale} className="legal-page"><header className="site-header"><BrandLogo locale={locale} /><Link className="back" href={`/${locale}`}>{content.home}</Link></header><article><p className="eyebrow">SCRITTORE SITE</p><h1>{title}</h1>{body[name]}<a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a></article></main>;
 }
