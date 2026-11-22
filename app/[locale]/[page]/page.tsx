@@ -8,7 +8,7 @@ import { resourceUi } from "../../../lib/localized-resources";
 import { BrandLogo } from "../../../lib/brand-logo";
 import { PricingPage } from "../../../lib/pricing-page";
 
-const pages = ["funzioni", "prezzi", "come-funziona", "faq", "privacy"] as const;
+const pages = ["funzioni", "prezzi", "come-funziona"] as const;
 type PageName = (typeof pages)[number];
 type Props = { params: Promise<{ locale: string; page: string }> };
 
@@ -19,7 +19,7 @@ export function generateStaticParams() {
 function titleFor(locale: Locale, page: PageName) {
   const content = pageContent[locale];
   const local: Record<PageName, string> = {
-    funzioni: copy[locale].nav[0], prezzi: copy[locale].pricingTitle, "come-funziona": copy[locale].nav[1], faq: copy[locale].faqTitle, privacy: content.privacyTitle,
+    funzioni: copy[locale].nav[0], prezzi: copy[locale].pricingTitle, "come-funziona": copy[locale].nav[1],
   };
   return local[page];
 }
@@ -30,8 +30,6 @@ function descriptionFor(locale: Locale, page: PageName) {
     funzioni: functionPageContent[locale].intro,
     prezzi: t.pricingLead,
     "come-funziona": functionPageContent[locale].intro,
-    faq: t.creditNote,
-    privacy: pageContent[locale].privacy[0],
   };
   return descriptions[page];
 }
@@ -56,8 +54,6 @@ export default async function InformationPage({ params }: Props) {
     funzioni: <><p className="page-intro">{functionPageContent[locale].intro}</p><div className="function-groups">{functionPageContent[locale].groups.map((group) => <section key={group.title} className="function-group"><h2>{group.title}</h2><p>{group.description}</p><ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul></section>)}</div><p className="function-note">{functionPageContent[locale].closing}</p></>,
     prezzi: <div className="simple-packages">{packages.map(([name, credits, price], index) => <article key={name}><h2>{name}</h2><b>{credits} crediti · {price}</b><p>{content.packageDescriptions[index]}</p></article>)}</div>,
     "come-funziona": <><p className="page-intro">{functionPageContent[locale].intro}</p><div className="workflow-steps">{functionPageContent[locale].groups.map((group) => <section key={group.title} className="workflow-step"><h2>{group.title}</h2><p>{group.description}</p><ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul></section>)}</div><p className="function-note">{functionPageContent[locale].closing}</p><div className="workflow-actions"><Link className="button ghost" href={`/${locale}/funzioni`}>{t.nav[0]} →</Link><Link className="button ghost" href={`/${locale}/risorse`}>{resourceUi[locale].nav} →</Link><Link className="button primary" href={`/${locale}/prezzi`}>{t.nav[3]} →</Link></div></>,
-    faq: <><h2>{t.faqTitle}</h2><p>{t.creditNote}</p><p>{content.faqText}</p></>,
-    privacy: <><p>{content.privacy[0]}</p><p>{content.privacy[1]}</p></>,
   };
   return <main dir={dir} lang={locale} className="legal-page"><header className="site-header"><BrandLogo locale={locale} /><Link className="back" href={`/${locale}`}>{content.home}</Link></header><article><p className="eyebrow">SCRITTORE SITE</p><h1>{title}</h1>{body[name]}<a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a></article></main>;
 }
