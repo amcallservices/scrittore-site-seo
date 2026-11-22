@@ -3,7 +3,7 @@ import { locales, siteUrl } from "../lib/site";
 import { getResources } from "../lib/localized-resources";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const pages = ["", "/funzioni", "/prezzi", "/come-funziona", "/faq", "/privacy"];
+  const pages = ["", "/funzioni", "/prezzi", "/come-funziona"];
   // Le date vengono omesse finché non esiste una data editoriale reale per ciascuna pagina.
   // Dichiarare ogni URL appena modificato a ogni richiesta renderebbe la sitemap poco affidabile.
   const corePages = locales.flatMap((locale) => pages.map((page) => ({ url: `${siteUrl}/${locale}${page}`, changeFrequency: "weekly" as const, priority: page ? 0.7 : 1 })));
