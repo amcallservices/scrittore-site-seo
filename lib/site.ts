@@ -42,7 +42,6 @@ copy.ar.gpt = "كل الميزات وفحص حقوق النشر على الوي�
 copy.zh.gpt = "完整功能、网页版权检查与上传外部创建的图片。";
 
 export const packages = [
-  ["Prova", "15", "€1,00", "Per provare funzioni e piccoli interventi."],
   ["Base", "150", "€10,00", "Per un progetto breve o lavorazioni distribuite."],
   ["Creator", "375", "€25,00", "Per più progetti o una stesura articolata."],
   ["Studio", "750", "€50,00", "Per chi lavora con continuità."],
