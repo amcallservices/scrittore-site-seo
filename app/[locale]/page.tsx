@@ -5,6 +5,7 @@ import { resourceUi } from "../../lib/localized-resources";
 import { appUrl, communityUrl, copy, instagramUrl, isLocale, locales, siteUrl, type Locale, whatsappUrl } from "../../lib/site";
 import { functionPageContent } from "../../lib/function-content";
 import { BrandLogo } from "../../lib/brand-logo";
+import { GuidedTour, TourStartButton } from "../../lib/guided-tour";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -30,6 +31,18 @@ const moreFunctionLabels: Record<Locale, string> = {
   ru: "Другие функции этого этапа",
   ar: "مزيد من وظائف هذه المرحلة",
   zh: "此阶段的更多功能",
+};
+
+const engineLabels: Record<Locale, { gpt: string; deepseek: string }> = {
+  it: { gpt: "Costoso", deepseek: "Economico" },
+  en: { gpt: "Expensive", deepseek: "Economical" },
+  es: { gpt: "Costoso", deepseek: "Económico" },
+  fr: { gpt: "Coûteux", deepseek: "Économique" },
+  de: { gpt: "Teuer", deepseek: "Günstig" },
+  ro: { gpt: "Costisitor", deepseek: "Economic" },
+  ru: { gpt: "Дорогой", deepseek: "Экономичный" },
+  ar: { gpt: "مرتفع التكلفة", deepseek: "اقتصادي" },
+  zh: { gpt: "高成本", deepseek: "经济" },
 };
 
 const madeInItaly: Record<Locale, string> = {
@@ -207,11 +220,11 @@ export default async function LocaleHome({ params }: Props) {
       <details className="language-picker"><summary>{t.language}</summary><div>{locales.map((code) => <Link href={`/${code}`} key={code}>{copy[code].language}</Link>)}</div></details>
     </header>
 
-    <section className="hero hero-after-demo">
+    <section className="hero hero-after-demo" data-tour="hero">
       <div className="hero-copy">
         <h1>{heroDisplayTitles[locale]}</h1>
         <p className="lead">{heroVisibleLeads[locale]}</p>
-        <div className="actions"><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a><Link className="button ghost" href={`/${locale}/come-funziona`}>{t.secondary}</Link></div>
+        <div className="actions"><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a><Link className="button ghost" href={`/${locale}/come-funziona`}>{t.secondary}</Link><TourStartButton locale={locale} className="button tour-hero-btn" /></div>
         <p className="made-in-italy">🇮🇹 {madeInItaly[locale]}</p>
       </div>
       <aside className="hero-path" aria-label={functionOverview.eyebrow}>
@@ -220,19 +233,20 @@ export default async function LocaleHome({ params }: Props) {
       </aside>
     </section>
 
-    <section id="demo" className="demo demo-first" aria-label="Scrittore Site demo"><div className="demo-intro"><p className="eyebrow">LIVE DEMO</p><h2>{t.demoTitle}</h2><p>{t.demoText}</p></div><div className="frame-wrap"><iframe src={`${appUrl}?embed=true`} title="Scrittore Site demo" loading="lazy" /></div></section>
+    <section id="demo" data-tour="demo" className="demo demo-first" aria-label="Scrittore Site demo"><div className="demo-intro"><p className="eyebrow">LIVE DEMO</p><h2>{t.demoTitle}</h2><p>{t.demoText}</p></div><div className="frame-wrap"><iframe src={`${appUrl}?embed=true`} title="Scrittore Site demo" loading="lazy" /></div></section>
 
     <section className="demo-link"><p>{t.demoText}</p><a className="button ghost" href={appUrl} target="_blank" rel="noopener noreferrer">{t.fullscreen} ↗</a></section>
 
-    <section id="features" className="section section-compact"><p className="eyebrow">SCRITTORE SITE</p><h2>{t.featureTitle}</h2><ul className="feature-list">{t.features.map((feature) => <li key={feature}>{feature}</li>)}</ul></section>
+    <section id="features" data-tour="features" className="section section-compact"><p className="eyebrow">SCRITTORE SITE</p><h2>{t.featureTitle}</h2><ul className="feature-list">{t.features.map((feature) => <li key={feature}>{feature}</li>)}</ul></section>
 
-    <section className="section function-overview" aria-labelledby="function-overview-title"><p className="eyebrow">{functionOverview.eyebrow}</p><h2 id="function-overview-title">{functionOverviewTitles[locale]}</h2><p className="function-overview-lead">{functionOverview.intro}</p><div className="home-function-grid">{functionOverview.groups.map((group) => <article key={group.title}><h3>{group.title}</h3><p>{group.description}</p><ul>{group.items.slice(0, 2).map((item) => <li key={item}>{item}</li>)}</ul>{group.items.length > 2 && <details><summary>{moreFunctionLabels[locale]}</summary><ul>{group.items.slice(2).map((item) => <li key={item}>{item}</li>)}</ul></details>}</article>)}</div><p className="function-overview-note">{functionOverview.closing}</p><Link className="button ghost" href={`/${locale}/funzioni`}>{t.nav[0]} →</Link></section>
+    <section data-tour="functions" className="section function-overview" aria-labelledby="function-overview-title"><p className="eyebrow">{functionOverview.eyebrow}</p><h2 id="function-overview-title">{functionOverviewTitles[locale]}</h2><p className="function-overview-lead">{functionOverview.intro}</p><div className="home-function-grid">{functionOverview.groups.map((group) => <article key={group.title}><h3>{group.title}</h3><p>{group.description}</p><ul>{group.items.slice(0, 2).map((item) => <li key={item}>{item}</li>)}</ul>{group.items.length > 2 && <details><summary>{moreFunctionLabels[locale]}</summary><ul>{group.items.slice(2).map((item) => <li key={item}>{item}</li>)}</ul></details>}</article>)}</div><p className="function-overview-note">{functionOverview.closing}</p><Link className="button ghost" href={`/${locale}/funzioni`}>{t.nav[0]} →</Link></section>
 
-    <section id="engines" className="section engines section-compact"><p className="eyebrow">AI</p><h2>{t.engineTitle}</h2><div className="engine-grid"><article><h3>GPT-5.4</h3><p>{gptEngineDescriptions[locale]}</p></article><article><h3>DeepSeek V4 Pro</h3><p>{t.deepseek}</p></article></div><p className="note">{t.creditNote}</p></section>
+    <section id="engines" data-tour="engines" className="section engines section-compact"><p className="eyebrow">AI</p><h2>{t.engineTitle}</h2><div className="engine-grid"><article><h3>{engineLabels[locale].gpt}</h3><p>{gptEngineDescriptions[locale]}</p></article><article><h3>{engineLabels[locale].deepseek}</h3><p>{t.deepseek}</p></article></div><p className="note">{t.creditNote}</p></section>
 
-    <section className="section resources-promo section-compact"><p className="eyebrow">{resources.eyebrow}</p><h2>{resources.indexTitle}</h2><p className="essential-copy">{resources.indexLead}</p><Link className="button ghost" href={`/${locale}/risorse`}>{resources.all} →</Link></section>
-    <section id="faq" className="section faq section-compact"><p className="eyebrow">FAQ</p><h2>{t.faqTitle}</h2><Faq locale={locale} /></section>
-    <section className="closing closing-compact"><h2>{t.finalTitle}</h2><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a></section>
+    <section data-tour="resources" className="section resources-promo section-compact"><p className="eyebrow">{resources.eyebrow}</p><h2>{resources.indexTitle}</h2><p className="essential-copy">{resources.indexLead}</p><Link className="button ghost" href={`/${locale}/risorse`}>{resources.all} →</Link></section>
+    <section id="faq" data-tour="faq" className="section faq section-compact"><p className="eyebrow">FAQ</p><h2>{t.faqTitle}</h2><Faq locale={locale} /></section>
+    <section data-tour="start" className="closing closing-compact"><h2>{t.finalTitle}</h2><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{t.primary}</a></section>
     <footer><span>{t.copyright} {new Date().getFullYear()}</span><div><Link href={`/${locale}/risorse`}>{resources.nav}</Link><Link href={`/${locale}/funzioni`}>{t.nav[0]}</Link><Link href={`/${locale}/prezzi`}>{t.nav[3]}</Link><Link href={`/${locale}/faq`}>FAQ</Link><Link href={`/${locale}/privacy`}>Privacy</Link><a href={trustpilotReviewUrl} target="_blank" rel="noopener noreferrer">{reviewLabels[locale]}</a><a href={communityUrl} target="_blank" rel="noopener noreferrer">{t.community}</a><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">{t.support}</a></div></footer>
+    <GuidedTour locale={locale} dir={dir} />
   </main>;
 }
