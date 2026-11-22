@@ -6,6 +6,7 @@ import { pageContent } from "../../../lib/page-content";
 import { functionPageContent } from "../../../lib/function-content";
 import { resourceUi } from "../../../lib/localized-resources";
 import { BrandLogo } from "../../../lib/brand-logo";
+import { PricingPage } from "../../../lib/pricing-page";
 
 const pages = ["funzioni", "prezzi", "come-funziona", "faq", "privacy", "termini"] as const;
 type PageName = (typeof pages)[number];
@@ -49,6 +50,7 @@ export default async function InformationPage({ params }: Props) {
   const { locale, page } = await params;
   if (!isLocale(locale) || !pages.includes(page as PageName)) notFound();
   const t = copy[locale]; const name = page as PageName; const dir = t.direction || "ltr";
+  if (name === "prezzi") return <PricingPage locale={locale} />;
   const content = pageContent[locale];
   const title = titleFor(locale, name);
   const body: Record<PageName, React.ReactNode> = {
