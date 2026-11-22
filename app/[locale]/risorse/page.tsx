@@ -39,6 +39,6 @@ export default async function ResourcesPage({ params }: Props) {
     <section className="resources-hero"><p className="eyebrow">{ui.eyebrow}</p><h1>{ui.indexTitle}</h1><p>{ui.indexLead}</p></section>
     <section className="resource-grid" aria-label={`${ui.nav} Scrittore Site`}>{resources.map((guide, index) => <article key={guide.slug}><span>{String(index + 1).padStart(2, "0")}</span><h2>{guide.title}</h2><p>{guide.description}</p><div>{guide.keywords.slice(0, 2).map((keyword) => <small key={keyword}>{keyword}</small>)}</div><Link href={`/${locale}/risorse/${guide.slug}`}>{ui.read} <b>→</b></Link></article>)}</section>
     <section className="resource-cta"><h2>{ui.ctaTitle}</h2><p>{ui.ctaText}</p><a className="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">{ui.begin}</a></section>
-    <footer><span>© Scrittore Site {new Date().getFullYear()}</span><div><Link href={`/${locale}`}>{ui.all}</Link><Link href={`/${locale}/privacy`}>{copy[locale].nav[4]}</Link><Link href={`/${locale}/termini`}>Terms</Link></div></footer>
+    <footer><span>© Scrittore Site {new Date().getFullYear()}</span><div><Link href={`/${locale}`}>{ui.all}</Link><Link href={`/${locale}/privacy`}>{copy[locale].nav[4]}</Link></div></footer>
   </main>;
 }
