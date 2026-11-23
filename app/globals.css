@@ -493,3 +493,11 @@ body .article-page .resource-article p,body .article-page .resource-article li {
   .legal-page .function-groups,.legal-page .workflow-steps { grid-template-columns:1fr; }
   body .legal-page article { margin-top:40px; }
 }
+
+/* ---------- Segnaposto della demo (caricata dopo il resto della pagina) ---------- */
+.frame-wrap .demo-skeleton { display:grid; place-content:center; justify-items:center; gap:16px; height:720px; border-radius:21px; background:linear-gradient(110deg,#0d2940 30%,#123852 50%,#0d2940 70%); background-size:200% 100%; animation:shimmer 1.6s linear infinite; color:#9fc4dc; font:600 1rem system-ui,sans-serif; }
+.frame-wrap .demo-skeleton span { width:38px; height:38px; border:4px solid rgba(139,217,255,.25); border-top-color:#8bd9ff; border-radius:50%; animation:spin .9s linear infinite; }
+@keyframes shimmer { to { background-position:-200% 0; } }
+@keyframes spin { to { transform:rotate(360deg); } }
+@media (max-width:950px) { .frame-wrap .demo-skeleton { height:650px; } }
+@media (max-width:620px) { .frame-wrap .demo-skeleton { height:min(560px,75svh); } }

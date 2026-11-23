@@ -6,6 +6,7 @@ import { appUrl, communityUrl, copy, instagramUrl, isLocale, locales, siteUrl, t
 import { functionPageContent } from "../../lib/function-content";
 import { BrandLogo } from "../../lib/brand-logo";
 import { GuidedTour, TourStartButton } from "../../lib/guided-tour";
+import { LazyDemoFrame, demoLoadingText } from "../../lib/demo-frame";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -233,7 +234,7 @@ export default async function LocaleHome({ params }: Props) {
       </aside>
     </section>
 
-    <section id="demo" data-tour="demo" className="demo demo-first" aria-label="Scrittore Site demo"><div className="demo-intro"><p className="eyebrow">LIVE DEMO</p><h2>{t.demoTitle}</h2><p>{t.demoText}</p></div><div className="frame-wrap"><iframe src={`${appUrl}?embed=true`} title="Scrittore Site demo" loading="lazy" /></div></section>
+    <section id="demo" data-tour="demo" className="demo demo-first" aria-label="Scrittore Site demo"><div className="demo-intro"><p className="eyebrow">LIVE DEMO</p><h2>{t.demoTitle}</h2><p>{t.demoText}</p></div><div className="frame-wrap"><LazyDemoFrame src={`${appUrl}?embed=true`} title="Scrittore Site demo" loadingText={demoLoadingText[locale]} /></div></section>
 
     <section className="demo-link"><p>{t.demoText}</p><a className="button ghost" href={appUrl} target="_blank" rel="noopener noreferrer">{t.fullscreen} ↗</a></section>
 
