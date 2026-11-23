@@ -5,7 +5,7 @@ export function BrandLogo({ locale }: { locale: Locale }) {
   return (
     <Link href={`/${locale}`} className="brand brand-logo" aria-label="Scrittore Site">
       <span className="brand-symbol" aria-hidden="true">
-        <img src="/brand/scrittore-site-logo.png" alt="" />
+        <img src="/brand/scrittore-site-logo-176.webp" alt="" width="88" height="88" decoding="async" />
       </span>
       <span className="brand-wordmark">Scrittore<span>.site</span></span>
     </Link>
